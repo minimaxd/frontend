@@ -1,0 +1,11 @@
+1.console.log()
+2.console.log('%s',num)插入输出
+3.console.log('%c','font-size=16;')输出有样式的值
+4.console.dir()输出dom对象的所有属性
+5.console.count('lable'),计数
+6.console.time()和console.timeend(‘name’)一对此为name计数器
+console.warn()警告
+console.error()出错
+console.groupcollaspe()分组开始console.groupend()分组结束
+console.assert(条件，输出)不满足前面就输出后面
+console.info()输出一个通知信息

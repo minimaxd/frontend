@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自制小时钟</title>
+    <style>
+        body {
+            background-image: url('./bbgonb.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            display: flex;
+        }
+
+        .major {
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            border: 50px solid white;
+            position: relative;
+            justify-content: center;
+            margin: 100px auto;
+            box-shadow:
+                0 0 20px rgba(184, 40, 243, 0.8),
+                /* 外层淡紫色光晕 */
+                inset 0 0 30px rgba(89, 75, 98, 0.6);
+            /* 内层深紫色阴影 */
+        }
+
+        .hour-hand {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 10px;
+            height: 150px;
+            background-color: black;
+            transform-origin: 50% 100%;
+            transform: translate(-50%, -100%);
+            /* transform: rotate(90deg); */
+        }
+
+        .minute-hand {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 12px;
+            height: 200px;
+            background-color: black;
+            transform-origin: 50% 100%;
+            transform: translate(-50%, -100%);
+            /* transform: rotate(-90deg); */
+        }
+
+        .second-hand {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 10px;
+            height: 250px;
+            background-color: black;
+            transform-origin: 50% 100%;
+            transform: translate(-50%, -100%);
+            /* transform: rotate(180deg); */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="major">
+        <div class="hour-hand"></div>
+        <div class="minute-hand"></div>
+        <div class="second-hand"></div>
+    </div>
+    <script>
+        const hour = document.querySelector('.hour-hand')
+        const minute = document.querySelector('.minute-hand')
+        const second = document.querySelector('.second-hand')
+        function settime() {
+            var date = new Date()
+            let s = date.getSeconds()
+            let m = date.getMinutes()
+            let h = date.getHours()
+            second.style.transform = `translate(-50%,-100%) rotate(${s * 6}deg)`
+            minute.style.transform = `translate(-50%,-100%) rotate(${m * 6 + s * 0.1}deg)`
+            hour.style.transform = `translate(-50%,-100%) rotate(${h * 30 + m * 0.5 + s * 0.0083}deg)`
+            //   console.log(date);
+        }
+
+        settime()
+        setInterval(settime, 1000)
+
+    </script>
+</body>
+
+</html>

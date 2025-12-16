@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>麦克风识别</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="words" contenteditable>
+
+    </div>
+    <button>我是按钮 </button>
+    <script>
+        const div=document.querySelector('.words')
+        // 这两个都是构造函数，生成的是构造对象，要使用需要实例化
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+        const recognition = new SpeechRecognition()
+        recognition.lang = 'en-US'
+        recognition.continuous = true
+        recognition.interimResults = true
+        recognition.addEventListener('result', function (e) {
+            console.log('1111')
+            console.log(e.results)
+        })
+        recognition.addEventListener('start', function () {
+            console.log('strat')
+        })
+        // 监控到有声音
+        recognition.addEventListener('speechstart', function () {
+            console.log(12333)
+        })
+        recognition.addEventListener('error', function (e) {
+    console.log('识别错误:', e.error);
+});
+        const button = document.querySelector('button')
+        button.addEventListener('click', () => { recognition.start() })
+    </script>
+</body>
+
+</html>

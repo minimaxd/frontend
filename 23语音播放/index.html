@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语音阅读</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="voiceinitor">
+        <h1>The voiceinator 5000</h1>
+        <select name="voices">
+            <option value="">select a voice</option>
+        </select>
+        <label>Rate:</label>
+        <input type="range" value="1" max="3" min="1" step="0.1" name="rate">
+        <label>Pitch</label>
+        <input type="range" name="pitch" max="2" min="0" step="0.1">
+        <textarea cols="30" rows="10">Hello! i love JavaScript</textarea>
+        <button id="stop">Stop!</button>
+        <button id="speak">Speak</button>
+    </div>
+    <script>
+        const msg = new SpeechSynthesisUtterance()
+        msg.text = document.querySelector('textarea').value
+        const speakbutton = document.querySelector('#speak')
+        const stopbutton = document.querySelector('#stop')
+        const options = document.querySelectorAll('option')
+        const textarea = document.querySelector('textarea')
+        const rate = document.querySelector('[name="rate"]')
+        const pitch = document.querySelector('[name="pitch"]')
+        console.log(rate)
+        let voicesarr
+        function populate() {
+            voicesarr = speechSynthesis.getVoices();
+            console.log(voicesarr)
+            select.innerHTML = voicesarr.filter(item => item.lang.includes('zh'))
+                .map(i => `<option value="${i.name}">${i.name}(${i.lang})</option>`)
+                .join('');
+        }
+        function setv() {
+            msg.voice = voicesarr.find(voice => voice.name === this.value)
+            toggle()
+        }
+        function toggle(startover = true) {
+            speechSynthesis.cancel()
+            if (startover) {
+                speechSynthesis.speak(msg)
+            }
+        }
+        const select = document.querySelector('[name="voices"]')
+        speechSynthesis.addEventListener('voiceschanged', populate)
+        select.addEventListener('change', setv)
+        speakbutton.addEventListener('click', toggle)
+        stopbutton.addEventListener('click', () => toggle(false))
+        textarea.addEventListener('input', function () { msg.text = this.value })
+        rate.addEventListener('input', function () {
+            msg.rate = parseFloat(this.value)
+            if (speechSynthesis.speaking) {
+                toggle();
+            }
+        })
+        pitch.addEventListener('input', function () {
+            msg.pitch = parseFloat(this.value)
+            if (speechSynthesis.speaking) {
+                toggle();
+            }
+        }
+        )
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Type Ahead</title>
+    <link rel="icon" href="https://fav.farm/✅">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="query">
+        <div class="query1">
+            <input type="search" placeholder="City or State">
+        </div>
+        <ul>
+            <li>Filter For A City</li>
+            <li>Or A State</li>
+        </ul>
+    </div>
+    <script>
+        const cities=[]
+        const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+        const input = document.querySelector('input')
+        const ul=document.querySelector('ul')
+        // fetch(endpoint).then(response=>{
+        //     return response.json()
+        // }).then(data=>{
+        //     cities.push(...data) 
+        // })
+        // 修改版利用asyanc 和await
+        async function getdata()
+        {
+            try{
+               let response=await fetch(endpoint)
+            //    console.log(response)
+               if(response.ok)
+               {
+                let data=await response.json()
+            cities.push(...data)
+               }
+               else{
+                console.log('网络请求失败')
+               }
+              
+            }
+            catch{
+                console.log('出错')
+            }
+
+           
+        } 
+        getdata()
+        // 这是匹配城市利用生成动态正则表达式和match（），用include只能匹配简单的。还有filter(这里面要写条件return)，返回一个新数组
+     function matchCityandState(newword,arr)
+       {
+        const regExp=new RegExp(`${newword}`,'gi')
+       return arr.filter(i=>{
+       return i.city.match(regExp)||i.state.match(regExp)
+       })
+       }
+    //    用来处理逗号的。这里正则表达式需要理解不熟。
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+     }
+     function displaylist(arr,neww)
+     {
+      let newarr=arr.map(place=>{
+            const reg=new RegExp(neww,'gi')
+            const cityname=place.city.replace(reg,`<span class='active'>${neww}</span>`)
+            const statename=place.state.replace(reg,`<span class='active'>${neww}</span>`)
+            return`<li>
+                <span>${cityname},${statename}</span>
+                <span>${numberWithCommas(place.population)}</span>
+                </li>`
+        }).join('')
+        // console.log(newarr)
+        ul.innerHTML=newarr
+     }
+         input.addEventListener('keyup', function () {
+         ul.innerHTML = '';
+        let  fitcities= matchCityandState(this.value,cities)
+        displaylist(fitcities,this.value)
+    //    fitcities.forEach(i=>{
+    //     //    if(i.city.includes(this.value)||i.state.includes(this.value)) 
+    //         // if((i.city.match(regExp)||i.state.match(regExp)))
+    //         const li= document.createElement('li')
+    //          li.innerHTML=`<span>${i.city},${i.state}</span><span>${i.population}</span>`
+    //          ul.appendChild(li)     
+    //     })
+        })
+        // 利用ajax来获取数据(5步省略一步判断游览器)
+    //     const proxyUrl ='https://api.allorigins.win/raw?url=';
+    //     const xhr=new XMLHttpRequest()
+    //     // console.log(xhr)
+    //   xhr.open('GET',proxyUrl+endpoint)
+    //     xhr.setRequestHeader('Content-Type','application/json')
+        
+    //     xhr.onreadystatechange=gettext
+    //     function gettext()
+    //     {
+    //        if(xhr.readyState===4)
+    //        {
+    //         if(xhr.status===200)
+    //        {try{
+    //        const data=JSON.parse(xhr.responseText) 
+    //       console.log(data) 
+    //        }
+    //        catch(error){
+    //         console.log('失败',error)
+    //        }
+            
+    //        }
+    //        else
+    //        {
+    //         console.log('网络请求失败')
+    //        }
+    //        }
+    //     }
+    //     xhr.send()
+       
+        
+    </script>
+</body>
+
+</html>

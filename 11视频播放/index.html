@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频播放器</title>
+     <link rel="icon" href="https://fav.farm/🔥" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="play-main">
+        <video src="brids.mp4" muted></video>
+        <div class="videoplayer">
+            <div id="pp">
+                <div class="progress"></div>
+            </div>
+            <button class="videokey">►</button>
+            <label >音量</label><input type="range" name="volume" min="0" max="1" value="0">
+             <label>倍数</label><input type="range" name="playbackRate" id="" min="0.5" max="2" value="1" step="0.1">
+            <button data-skip="-10" class="play_button">&lt;&lt;10</button>
+            <button data-skip="25" class="play_button">&gt;&gt;25</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

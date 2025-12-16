@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>按键播放音乐</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="keys">
+        <div data-id="a" class="key">
+            <kbd>A</kbd>
+            <span>HIHAT</span>
+        </div>
+        <div data-id="s" class="key">
+            <kbd>S</kbd>
+            <span>CLAP</span>
+        </div>
+        <div data-id="d" class="key">
+            <kbd>D</kbd>
+            <span>KiCK</span>
+        </div>
+        <div data-id="f" class="key">
+            <kbd>F</kbd>
+            <span>TINK</span>
+        </div>
+        <div data-id="g" class="key">
+            <kbd>G</kbd>
+            <span>BOOM</span>
+        </div>
+        <div data-id="h" class="key">
+            <kbd>H</kbd>
+            <span>OPENHAT</span>
+        </div>
+        <div data-id="j" class="key">
+            <kbd>J</kbd>
+            <span>RIDE</span>
+        </div>
+        <div data-id="k" class="key">
+            <kbd>K</kbd>
+            <span>SNARE</span>
+        </div>
+        <div data-id="l" class="key">
+            <kbd>L</kbd>
+            <span>TOM</span>
+        </div>
+
+    </div>
+    <audio src="./sound/hihat.wav" data-id="a"></audio>
+    <audio src="./sound/clap.wav" data-id="s"></audio>
+    <audio src="./sound/kick.wav" data-id="d"></audio>
+    <audio src="./sound/tink.wav" data-id="f"></audio>
+    <audio src="./sound/boom.wav" data-id="g"></audio>
+    <audio src="./sound/openhat.wav" data-id="h"></audio>
+    <audio src="./sound/ride.wav" data-id="j"></audio>
+    <audio src="./sound/snare.wav" data-id="k"></audio>
+    <audio src="./sound/tom.wav" data-id="l"></audio>
+    <script>
+        const audios = document.querySelectorAll('audio')
+        // const divs=document.querySelectorAll('div')
+        document.addEventListener('keydown', function (event) {
+            // console.log(event.key)
+            const div = document.querySelector(`div[data-id=${event.key}]`)
+            const audio = document.querySelector(`audio[data-id=${event.key}]`)
+            audio.currentTime = 0;
+            audio.play()
+            div.classList.add('playing')
+            // 监听div的动画结束就关闭特效
+            div.addEventListener('transitionend', function handle(e) {
+                if (e.propertyName === 'transform') {
+                    div.classList.remove('playing')
+                    div.removeEventListener('transitionend', handle)
+                }
+            })
+
+            // audio.src='./sound/boom.wav'
+            // audio.play()
+        })
+    </script>
+</body>
+
+</html>

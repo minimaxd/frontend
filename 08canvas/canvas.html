@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>画布画布Canvas</title>
+  <link rel="icon" href="https://fav.farm/🔥" />
+  <style>
+    html,
+    body {
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="draw" width="800" height="800"></canvas>
+  <script>
+    const canvas = document.querySelector('#draw')
+    const ctx = canvas.getContext('2d')
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+    let direction = true
+    ctx.lineWidth = 100
+    ctx.strokeStyle = 'black'
+    ctx.lineCap = 'round'
+    ctx.lineJoin = 'round'
+    let lastX = 0, lastY = 0
+    let isdrawing = false
+    let hue = 0
+    function draw(e) {
+      if (isdrawing != true) return
+      hue++
+      if (hue === 361) {
+        hue = 0
+      }
+      if (direction) {
+        ctx.lineWidth--
+        if (ctx.lineWidth <= 1) {
+          direction = false
+        }
+      }
+      else {
+        ctx.lineWidth++
+        if (ctx.lineWidth >= 100) {
+          direction = true
+        }
+      }
+      ctx.beginPath()
+      ctx.moveTo(lastX, lastY)
+      ctx.lineTo(e.offsetX, e.offsetY)
+      ctx.strokeStyle = `hsl(${hue},100%,50%)`
+      ctx.stroke()
+    }
+    canvas.addEventListener('mousedown', function (e) {
+      isdrawing = true
+      lastX = e.offsetX
+      lastY = e.offsetY
+
+    })
+    canvas.addEventListener('mousemove', function (e) {
+      draw(e)
+      lastX = e.offsetX
+      lastY = e.offsetY
+
+    })
+    canvas.addEventListener('mouseup', () => { isdrawing = false })
+    canvas.addEventListener('mouseout', () => { isdrawing = false })
+  </script>
+
+</body>
+
+</html>

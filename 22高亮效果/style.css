@@ -1,0 +1,56 @@
+html {
+    background: linear-gradient(45deg, hsla(340, 100%, 55%, 1) 0%, hsla(340, 100%, 55%, 0) 70%),
+        linear-gradient(135deg, hsla(225, 95%, 50%, 1) 10%, hsla(225, 95%, 50%, 0) 80%),
+        linear-gradient(225deg, hsla(140, 90%, 50%, 1) 10%, hsla(140, 90%, 50%, 0) 80%),
+        linear-gradient(315deg, hsla(35, 95%, 55%, 1) 100%, hsla(35, 95%, 55%, 0) 70%);
+    width: 100vw;
+    min-height: 100vh;
+    font-size: 20px;
+    box-sizing: border-box;
+}
+*,*::after,*::before{
+    box-sizing: inherit;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+}
+
+.wrapper {
+    max-width: 500px;
+      position: relative;
+
+}
+
+ul {
+    display: flex;
+gap:10px;
+}
+
+li {
+    list-style: none;
+    margin: 0 auto;
+    padding: 0 10px;
+    
+    display: inline-block 
+}
+
+a {
+    text-decoration: none;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+}
+
+.active {
+    position: absolute;
+    background-color: rgb(245, 209, 7);
+    border-radius: 45%;
+    transition: all 0.2s;
+    z-index: -1;
+    top:0;
+    left:0
+    
+}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>打地鼠</title>
+    <link rel="stylesheet" href="style.css">
+     <link href='https://fonts.googleapis.com/css?family=Amatic+SC:400,700' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+    <h1>WHACK_A_MOLE<span>0</span></h1>
+    <button >Start</button>
+    <button onclick="reset()">reset</button>
+    <div class="game">
+        <div class="hole hole1">
+            <div class="mole"></div>
+        </div>
+        <div class="hole hole2">
+            <div class="mole"></div>
+        </div>
+        <div class="hole hole3">
+            <div class="mole"></div>
+        </div>
+        <div class="hole hole4">
+            <div class="mole"></div>
+        </div>
+        <div class="hole hole5">
+            <div class="mole"></div>
+        </div>
+        <div class="hole hole6">
+            <div class="mole"></div>
+        </div>
+    </div>
+</body>
+<script>
+    let score=0
+    let isFlag=false
+    const button=document.querySelector('button')
+    const moles=document.querySelectorAll('.mole')
+    const holes=document.querySelectorAll('.hole')
+    const span=document.querySelector('span')
+    function reset(){
+        score=0
+        span.textContent=0
+        isFlag=false
+    }
+    function randHole(){
+        const id= Math.floor(Math.random()*6+1)
+        return holes[id-1]
+    }
+    function ranTime(min,max){
+        const time=Math.floor(Math.random()*(max-min)+min)
+       return time
+    }
+    function peep(){
+    const time=ranTime(200,1000)
+    const hole=randHole()
+    hole.querySelector('.mole').classList.add('up')
+    setTimeout(()=>{
+        hole.querySelector('.mole').classList.remove('up')
+        if(!isFlag)peep()
+    },time)
+
+    }
+    button.addEventListener('click',function(){
+        setTimeout(()=>isFlag=true,10000)
+        peep()
+        
+      
+    })
+    moles.forEach(mole=>{
+        mole.addEventListener('click',function(e){
+            console.log(1111)
+             if(e.isTrusted)
+             {
+                score++
+                this.classList.remove('up')
+               span.textContent=score
+             }
+        })
+    })
+    
+</script>
+</html>
